@@ -5,3 +5,5 @@ gradlew.bat
 settings.gradle
 gradle
 .idea
+.vagrant
+*.log
