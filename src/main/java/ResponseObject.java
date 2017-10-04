@@ -10,8 +10,10 @@ public class ResponseObject {
     public String message;
 
     public ResponseObject() throws SQLException {
+        String url = "jdbc:postgresql://" + FatMan.dbIp + ":" + FatMan.dbPort + "/" + FatMan.dbName;
+
         Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/ubuntu", "my_user", "my_password");
+                url, FatMan.dbUser, FatMan.dbPass);
 
         String query = "SELECT * FROM messages LIMIT 1";
         Statement stmt = connection.createStatement();

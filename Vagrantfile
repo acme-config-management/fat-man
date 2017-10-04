@@ -41,4 +41,12 @@ Vagrant.configure(2) do |config|
         psql -c "GRANT ALL PRIVILEGES ON TABLE messages TO my_user;"
     SHELL
 
+    config.vm.provision "shell", privileged: false, inline: <<-SHELL
+        echo "export db_ip=localhost" >> ~/.profile
+        echo "export db_port=5432" >> ~/.profile
+        echo "export db_name=ubuntu" >> ~/.profile
+        echo "export db_user=my_user" >> ~/.profile
+        echo "export db_pass=my_password" >> ~/.profile
+    SHELL
+
 end
