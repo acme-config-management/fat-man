@@ -37,7 +37,6 @@ Vagrant.configure(2) do |config|
     config.vm.provision "shell", privileged: false, inline: <<-SHELL
         psql -c "CREATE USER my_user WITH PASSWORD 'my_password';"
         psql -c "CREATE TABLE messages (message text)"
-        psql -c "INSERT INTO messages (message) VALUES ('This is a message from Postgres')"
         psql -c "GRANT ALL PRIVILEGES ON TABLE messages TO my_user;"
     SHELL
 

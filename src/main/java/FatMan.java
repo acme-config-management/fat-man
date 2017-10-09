@@ -9,21 +9,32 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import static spark.Spark.*;
 
 public class FatMan {
+    public static DAO dao = new DAO();
+
     public static String dbIp;
     public static String dbPort;
     public static String dbName;
     public static String dbUser;
     public static String dbPass;
+    public static String dbUrl;
 
     public static void main(String[] args) {
         getEnvironmentVariables();
-
         setPort(9876);
+
+        dbUrl = "jdbc:postgresql://" + dbIp + ":" + dbPort + "/" + dbName;
+
+        try {
+            dao.add();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
 
         get(new Route("/") {
             @Override
@@ -39,7 +50,7 @@ public class FatMan {
 
                 ObjectMapper mapper = new ObjectMapper();
                 try {
-                    ResponseObject responseObj = new ResponseObject();
+                    ResponseObject responseObj = dao.get();
                     return mapper.writeValueAsString(responseObj);
                 } catch (Exception e) {
                     e.printStackTrace();
