@@ -13,8 +13,11 @@ public class DAO {
         } catch (SQLException e) {
             Connection connection = DriverManager.getConnection(FatMan.dbUrl, FatMan.dbUser, FatMan.dbPass);
 
-            String query = "INSERT INTO messages (message) VALUES ('This is a message from Postgres')";
+            String query = "CREATE TABLE messages (message text)";
             Statement stmt = connection.createStatement();
+            stmt.execute(query);
+
+            query = "INSERT INTO messages (message) VALUES ('This is a message from Postgres')";
             stmt.execute(query);
 
             connection.close();
