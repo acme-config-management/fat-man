@@ -1,6 +1,10 @@
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.sql.*;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * Class ResponseObject
@@ -14,8 +18,26 @@ public class ResponseObject {
 
     public ResponseObject() {
         try {
-            origin = InetAddress.getLocalHost().getHostAddress();
-        } catch(UnknownHostException e) {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = interfaces.nextElement();
+
+                Enumeration<InetAddress> inets = networkInterface.getInetAddresses();
+
+                while (inets.hasMoreElements()) {
+                    InetAddress inet = inets.nextElement();
+
+                    if (inet.getHostAddress().contains("10.0")) {
+                        origin = inet.getHostAddress();
+                    }
+
+                }
+            }
+
+
+            //origin = InetAddress.getLocalHost().toString();
+        } catch(Exception e) {
             e.printStackTrace();
             origin = "Could not get ip address";
         }
