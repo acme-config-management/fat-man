@@ -28,10 +28,9 @@ public class ResponseObject {
                 while (inets.hasMoreElements()) {
                     InetAddress inet = inets.nextElement();
 
-                    if (inet.getHostAddress().contains("10.0")) {
+                    if (inet.getHostAddress().contains("10.0.10")) {
                         origin = inet.getHostAddress();
                     }
-
                 }
             }
 

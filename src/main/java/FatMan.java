@@ -36,8 +36,6 @@ public class FatMan {
             e.printStackTrace();
         }
 
-        CorsFilter.apply();
-
         get(new Route("/") {
             @Override
             public Object handle(Request request, Response response) {
